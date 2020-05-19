@@ -18,6 +18,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('status');
             $table->date('appointment_date');
             $table->time('appointment_time');
+            $table->integer('patient_id')->nullable();
             $table->timestamps();
         });
     }

@@ -33,31 +33,37 @@
                       <th scope="col">Appointment Date</th>
                       <th scope="col">Appointment Time</th>
                       <th scope="col">Status</th>
+                      <th scope="col">To</th>
                       <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                  @forelse($appointments as $appointment)
-                    <tr>
-                      <td>{{$appointment->appointment_date}}</td>
-                      <td>{{$appointment->appointment_time}}</td>
-                      @if($appointment->status === 0)
-                        <td class="text-info"><b>Free</b></td>
-                      @elseif($appointment->status === 1)
-                        <td class="text-success"><b>Booked</b></td>
-                      @else
-                        <td class="text-danger"><b>Expired</b></td>
-                      @endif
-                      <td>
-                        {{Form::open(['action' => ['AppointmentsController@destroy' , $appointment->id] , 'method' =>'DELETE'])}}
-                            {{Form::submit('Delete' , ['class' => 'btn btn-danger btn-xs'])}}
-                        {{Form::close()}}
-                      </td>
-                      <td><a href="/appointments/{{$appointment->id}}" class="btn-primary btn-xs">Edit</a></td>
-                    </tr>
-                  @empty
-                  <h3 class="text-center text-danger">You Don't Have any Appointment Yet!</h3>
-                  @endforelse
+                  @if(auth()->user()->appointments->count() > 0)
+                    @foreach($appointments as $appointment)
+                      <tr>
+                        <td>{{$appointment->appointment_date}}</td>
+                        <td>{{$appointment->appointment_time}}</td>
+                        @if($appointment->status === 0)
+                          <td class="text-info"><b>Free</b></td>
+                          <td>No one</td>
+                        @elseif($appointment->status === 1)
+                          <td class="text-success"><b>Booked</b></td>
+                          <td>{{$appointment->getPatient()->name}}</td>
+                        @else
+                          <td class="text-danger"><b>Expired</b></td>
+                          <td> </td>
+                        @endif
+                        <td>
+                          {{Form::open(['action' => ['AppointmentsController@destroy' , $appointment->id] , 'method' =>'DELETE'])}}
+                              {{Form::submit('Delete' , ['class' => 'btn btn-danger btn-xs'])}}
+                          {{Form::close()}}
+                        </td>
+                        <td><a href="/appointments/{{$appointment->id}}" class="btn-primary btn-xs">Edit</a></td>
+                      </tr>
+                    @endforeach
+                  @else
+                    <h3 class="text-center text-danger">You Don't Have any Appointment Yet!</h3>
+                  @endif
                   </tbody>
                 </table>
               </div>

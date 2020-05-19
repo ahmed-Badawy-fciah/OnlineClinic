@@ -20,7 +20,6 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/control', 'HomeController@control');
 Route::get('/booking', 'HomeController@booking');
-// Route::get('/appointments', 'HomeController@appointments');
 Route::get('/about', 'HomeController@about');
 Route::get('/connect_us', 'HomeController@connect_us');
 
@@ -30,3 +29,4 @@ Route::get('/appointments/{appointment}', 'AppointmentsController@edit');
 Route::post('/appointments', 'AppointmentsController@store');
 Route::patch('/appointments/{appointment}', 'AppointmentsController@update');
 Route::delete('/appointments/{appointment}', 'AppointmentsController@destroy');
+Route::patch('/appointment/{appointment}', 'AppointmentsController@choseAppointment');

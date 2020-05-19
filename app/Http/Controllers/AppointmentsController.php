@@ -12,6 +12,10 @@ class AppointmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         if(Auth::user()->role =!2){
@@ -19,7 +23,7 @@ class AppointmentsController extends Controller
         }
         $this->checkExpired();
         return view('appointments.appointments', [
-            'appointments' => Appointment::orderBy('appointment_date' , 'desc')->get(),
+            'appointments' => Appointment::orderBy('appointment_date' , 'asc')->get(),
         ]);
     }
 
@@ -97,4 +101,32 @@ class AppointmentsController extends Controller
         Appointment::where('appointment_date', \Carbon\Carbon::today())
         ->update(['status' => 2]);
     }
+
+    //Let Patient or repular user to use appointment
+    // You will use this function in others pages.
+    public function choseAppointment(Appointment $appointment)
+    {
+        
+        //check if the user is not the owner and the appointment is already avalibale
+        if(!$appointment->own() && $appointment->status != 1 && $appointment->status != 2)
+        {
+            $appointment->status = 1 ;
+            $appointment->patient_id = auth()->id();
+            $appointment->save();
+            return 'Done';
+        }
+        return 'You Cant choose this appointment';
+    }
+
+    // Some important notes
+    /*
+        In this code I used 0, 1 & 2 in the appointment status
+        as 0 = to free (no one chosoe the appointment yet or the appointment had just created)
+        1 = someone has booked the appointment
+        2 = the appointment date is expired (appointment date is equal to today)
+        .
+        .
+        .
+        Docor (the User ) can't create appointment has the date of today
+    */
 }
