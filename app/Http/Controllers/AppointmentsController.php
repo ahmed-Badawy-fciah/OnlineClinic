@@ -31,7 +31,10 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // Check Validation
+        $this->validateAppointment($request);
+
+        // Create new Appointment
         Appointment::create($request->all());
         return back();
     }
@@ -44,6 +47,7 @@ class AppointmentsController extends Controller
      */
     public function edit(Appointment $appointment)
     {
+        
         return view('appointments.edit', [
             'appointment' => $appointment,
         ]);
@@ -58,8 +62,10 @@ class AppointmentsController extends Controller
      */
     public function update(Request $request,Appointment  $appointment)
     {
-        // $UpdateAppointment = Appointment::findOrFail($appointment);
-        // $UpdateAppointment->appointment_date = $request->
+        //Check Validation
+        $this->validateAppointment($request);
+
+        // Update Appointment
         $appointment->update([
             'appointment_date' => $request->appointment_date,
             'appointment_time' => $request->appointment_time,
@@ -77,5 +83,13 @@ class AppointmentsController extends Controller
     {
         $appointment->delete();
         return back();
+    }
+
+    private function validateAppointment(Request $request)
+    {
+        $request->validate([
+            'appointment_date' => 'required|date|after:today',
+            'appointment_time' => 'required',
+        ]);
     }
 }

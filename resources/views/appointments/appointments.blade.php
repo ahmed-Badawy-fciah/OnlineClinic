@@ -11,10 +11,16 @@
                     <div class="form-group">
                       {{Form::label('appointment_date' , 'Appointment')}}
                       {{Form::date('appointment_date' , \Carbon\Carbon::now()  ,['class' => 'form-control' ,])}}
+                      @error('appointment_date')
+                        <p class="text-danger text-small">{{$message}}</p>
+                      @enderror
                     </div>
                     <div class="form-group">
                       {{Form::label('appointment_time' , 'Time')}}
                       {{Form::time('appointment_time', \Carbon\Carbon::now()->format('H:i')) , ['class' => 'form-control']}}
+                      @error('appointment_time')
+                        <p class="text-danger text-small">{{$message}}</p>
+                      @enderror
                     </div>
                     <div class="form-group">
                       {{Form::label('status' , 'status')}}
