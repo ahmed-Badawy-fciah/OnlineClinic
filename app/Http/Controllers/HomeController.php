@@ -43,14 +43,15 @@ public function booking()
 
     return view('booking');
 }
-public function appointments()
-{
-    if(Auth::user()->role =!2){
-        return redirect('/');
-    }
 
-    return view('appointments');
-}
+// public function appointments()
+// {
+//     if(Auth::user()->role =!2){
+//         return redirect('/');
+//     }
+
+//     return view('appointments');
+// }
 public function about()
     {
         return view('about');

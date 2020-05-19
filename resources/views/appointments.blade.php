@@ -7,7 +7,7 @@
                   
               <div class="panel-body">
                <h3 class="text-center">Welcome doctor {{auth()->user()->name}}</h3>
-                  {{ Form::open(['url' => 'foo/bar']) }}
+                  {{ Form::open(['action' => 'AppointmentsController@store' , 'method' => 'POST']) }}
                     <div class="form-group">
                       {{Form::label('title' , 'Title')}}
                       {{Form::text('title' , '' , ['class' => 'form-control' , 'placeholder' => 'this is title'])}}
@@ -20,7 +20,9 @@
                       {{Form::label('appointment_time' , 'Time')}}
                       {{Form::time('appointment_time', \Carbon\Carbon::now()->format('H:i')) , ['class' => 'form-control']}}
                     </div>
-                      
+                    <div class="form-group">
+                      {{ Form::submit('submit', ['class' => 'btn btn-primary']) }}
+                    </div>
                   {{ Form::close() }}
                 <hr>
                <table class="table">
@@ -28,29 +30,29 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Appointment Date</th>
+                      <th scope="col">Appointment Time</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Handle</th>
+                      <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
+                  @forelse($appointments as $appointment)
                     <tr>
                       <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
+                      <td>{{$appointment->appointment_date}}</td>
+                      <td>{{$appointment->appointment_time}}</td>
+                      <td>{{$appointment->status}}</td>
+                      <td>
+                        {{Form::open(['action' => ['AppointmentsController@destroy' , $appointment->id] , 'method' =>'DELETE'])}}
+                            {{Form::submit('Delete' , ['class' => 'btn btn-danger btn-xs'])}}
+                        {{Form::close()}}
+                      </td>
                     </tr>
+                  @empty
                     <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
+                      You don't have any appointments
                     </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
+                  @endforelse
                   </tbody>
                 </table>
               </div>

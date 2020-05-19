@@ -20,6 +20,11 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/control', 'HomeController@control');
 Route::get('/booking', 'HomeController@booking');
-Route::get('/appointments', 'HomeController@appointments');
+// Route::get('/appointments', 'HomeController@appointments');
 Route::get('/about', 'HomeController@about');
 Route::get('/connect_us', 'HomeController@connect_us');
+
+
+Route::get('/appointments', 'AppointmentsController@index');
+Route::post('/appointments', 'AppointmentsController@store');
+Route::delete('/appointments/{appointment}', 'AppointmentsController@destroy');
