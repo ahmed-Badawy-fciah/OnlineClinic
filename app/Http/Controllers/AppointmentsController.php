@@ -18,7 +18,7 @@ class AppointmentsController extends Controller
             return redirect('/');
         }
     
-        return view('appointments', [
+        return view('appointments.appointments', [
             'appointments' => Appointment::orderBy('appointment_date' , 'desc')->get(),
         ]);
     }
@@ -31,6 +31,7 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
+        
         Appointment::create($request->all());
         return back();
     }
@@ -41,9 +42,11 @@ class AppointmentsController extends Controller
      * @param  \App\Appointments  $appointments
      * @return \Illuminate\Http\Response
      */
-    public function show(Appointment $appointment)
+    public function edit(Appointment $appointment)
     {
-        //
+        return view('appointments.edit', [
+            'appointment' => $appointment,
+        ]);
     }
 
     /**
@@ -53,9 +56,15 @@ class AppointmentsController extends Controller
      * @param  \App\Appointments  $appointments
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $appointment)
+    public function update(Request $request,Appointment  $appointment)
     {
-        //
+        // $UpdateAppointment = Appointment::findOrFail($appointment);
+        // $UpdateAppointment->appointment_date = $request->
+        $appointment->update([
+            'appointment_date' => $request->appointment_date,
+            'appointment_time' => $request->appointment_time,
+        ]);
+        return redirect('/appointments');
     }
 
     /**

@@ -26,5 +26,7 @@ Route::get('/connect_us', 'HomeController@connect_us');
 
 
 Route::get('/appointments', 'AppointmentsController@index');
+Route::get('/appointments/{appointment}', 'AppointmentsController@edit');
 Route::post('/appointments', 'AppointmentsController@store');
+Route::patch('/appointments/{appointment}', 'AppointmentsController@update');
 Route::delete('/appointments/{appointment}', 'AppointmentsController@destroy');

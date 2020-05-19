@@ -28,7 +28,6 @@
                <table class="table">
                   <thead class="thead-dark">
                     <tr>
-                      <th scope="col">#</th>
                       <th scope="col">Appointment Date</th>
                       <th scope="col">Appointment Time</th>
                       <th scope="col">Status</th>
@@ -38,7 +37,6 @@
                   <tbody>
                   @forelse($appointments as $appointment)
                     <tr>
-                      <th scope="row">1</th>
                       <td>{{$appointment->appointment_date}}</td>
                       <td>{{$appointment->appointment_time}}</td>
                       <td>{{$appointment->status}}</td>
@@ -47,6 +45,7 @@
                             {{Form::submit('Delete' , ['class' => 'btn btn-danger btn-xs'])}}
                         {{Form::close()}}
                       </td>
+                      <td><a href="/appointments/{{$appointment->id}}" class="btn-primary btn-xs">Edit</a></td>
                     </tr>
                   @empty
                     <tr>
