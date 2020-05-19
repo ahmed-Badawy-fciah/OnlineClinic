@@ -89,7 +89,7 @@ class AppointmentsController extends Controller
     {
         $request->validate([
             'appointment_date' => 'required|date|after:today',
-            'appointment_time' => 'required',
+            'appointment_time' => 'required|date_format:H:i',
         ]);
     }
 }

@@ -23,10 +23,6 @@
                       @enderror
                     </div>
                     <div class="form-group">
-                      {{Form::label('status' , 'status')}}
-                      {{Form::number('status' , $appointment->status , ['class' => 'form-control' , 'placeholder' => 'Status'])}}
-                    </div>
-                    <div class="form-group">
                         {{Form::hidden('_method' , 'PATCH')}}
                     </div>
                     <div class="form-group">

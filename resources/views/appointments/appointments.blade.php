@@ -10,7 +10,7 @@
                   {{ Form::open(['action' => 'AppointmentsController@store' , 'method' => 'POST']) }}
                     <div class="form-group">
                       {{Form::label('appointment_date' , 'Appointment')}}
-                      {{Form::date('appointment_date' , \Carbon\Carbon::now()  ,['class' => 'form-control' ,])}}
+                      {{Form::date('appointment_date' , \Carbon\Carbon::tomorrow()  ,['class' => 'form-control' ,])}}
                       @error('appointment_date')
                         <p class="text-danger text-small">{{$message}}</p>
                       @enderror
@@ -23,11 +23,7 @@
                       @enderror
                     </div>
                     <div class="form-group">
-                      {{Form::label('status' , 'status')}}
-                      {{Form::number('status' , '' , ['class' => 'form-control' , 'placeholder' => 'Status'])}}
-                    </div>
-                    <div class="form-group">
-                      {{ Form::submit('submit', ['class' => 'btn btn-primary']) }}
+                      {{ Form::submit('submit', ['class' => 'btn btn-success']) }}
                     </div>
                   {{ Form::close() }}
                 <hr>
@@ -45,10 +41,12 @@
                     <tr>
                       <td>{{$appointment->appointment_date}}</td>
                       <td>{{$appointment->appointment_time}}</td>
-                      @if($appointment->status == 1)
-                      <td class="text-info"><b>Free</b></td>
+                      @if($appointment->status === 0)
+                        <td class="text-info"><b>Free</b></td>
+                      @elseif($appointment->status === 1)
+                        <td class="text-success"><b>Booked</b></td>
                       @else
-                      <td class="text-success"><b>Booked</b></td>
+                        <td class="text-danger"><b>Expired</b></td>
                       @endif
                       <td>
                         {{Form::open(['action' => ['AppointmentsController@destroy' , $appointment->id] , 'method' =>'DELETE'])}}
