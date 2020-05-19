@@ -14,4 +14,9 @@ class Appointment extends Model
             $appointment->status = 0;
         });
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -17,7 +17,7 @@ class AppointmentsController extends Controller
         if(Auth::user()->role =!2){
             return redirect('/');
         }
-    
+        $this->checkExpired();
         return view('appointments.appointments', [
             'appointments' => Appointment::orderBy('appointment_date' , 'desc')->get(),
         ]);
@@ -91,5 +91,10 @@ class AppointmentsController extends Controller
             'appointment_date' => 'required|date|after:today',
             'appointment_time' => 'required|date_format:H:i',
         ]);
+    }
+
+    private function checkExpired(){
+        Appointment::where('appointment_date', \Carbon\Carbon::today())
+        ->update(['status' => 2]);
     }
 }
