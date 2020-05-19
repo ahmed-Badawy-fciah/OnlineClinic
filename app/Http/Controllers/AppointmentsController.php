@@ -35,7 +35,7 @@ class AppointmentsController extends Controller
         $this->validateAppointment($request);
 
         // Create new Appointment
-        Appointment::create($request->all());
+        auth()->user()->appointments()->create($request->all());
         return back();
     }
 
