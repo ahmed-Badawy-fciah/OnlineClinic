@@ -17,7 +17,7 @@
                     </div>
                     <div class="form-group">
                       {{Form::label('appointment_time' , 'Time')}}
-                      {{Form::time('appointment_time', \Carbon\Carbon::now()->format('H:i')) , ['class' => 'form-control']}}
+                      {{Form::time('appointment_time', \Carbon\Carbon::now()->format('H:i') , ['class' => 'form-control'])}}
                       @error('appointment_time')
                         <p class="text-danger text-small">{{$message}}</p>
                       @enderror
@@ -45,7 +45,11 @@
                     <tr>
                       <td>{{$appointment->appointment_date}}</td>
                       <td>{{$appointment->appointment_time}}</td>
-                      <td>{{$appointment->status}}</td>
+                      @if($appointment->status == 1)
+                      <td class="text-info"><b>Free</b></td>
+                      @else
+                      <td class="text-success"><b>Booked</b></td>
+                      @endif
                       <td>
                         {{Form::open(['action' => ['AppointmentsController@destroy' , $appointment->id] , 'method' =>'DELETE'])}}
                             {{Form::submit('Delete' , ['class' => 'btn btn-danger btn-xs'])}}
@@ -54,9 +58,7 @@
                       <td><a href="/appointments/{{$appointment->id}}" class="btn-primary btn-xs">Edit</a></td>
                     </tr>
                   @empty
-                    <tr>
-                      You don't have any appointments
-                    </tr>
+                  <h3 class="text-center text-danger">You Don't Have any Appointment Yet!</h3>
                   @endforelse
                   </tbody>
                 </table>
