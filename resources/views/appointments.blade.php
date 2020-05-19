@@ -9,16 +9,16 @@
                <h3 class="text-center">Welcome doctor {{auth()->user()->name}}</h3>
                   {{ Form::open(['action' => 'AppointmentsController@store' , 'method' => 'POST']) }}
                     <div class="form-group">
-                      {{Form::label('title' , 'Title')}}
-                      {{Form::text('title' , '' , ['class' => 'form-control' , 'placeholder' => 'this is title'])}}
-                    </div>
-                    <div class="form-group">
                       {{Form::label('appointment_date' , 'Appointment')}}
                       {{Form::date('appointment_date' , \Carbon\Carbon::now()  ,['class' => 'form-control' ,])}}
                     </div>
                     <div class="form-group">
                       {{Form::label('appointment_time' , 'Time')}}
                       {{Form::time('appointment_time', \Carbon\Carbon::now()->format('H:i')) , ['class' => 'form-control']}}
+                    </div>
+                    <div class="form-group">
+                      {{Form::label('status' , 'status')}}
+                      {{Form::number('status' , '' , ['class' => 'form-control' , 'placeholder' => 'Status'])}}
                     </div>
                     <div class="form-group">
                       {{ Form::submit('submit', ['class' => 'btn btn-primary']) }}

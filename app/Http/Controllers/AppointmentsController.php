@@ -31,7 +31,8 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
-        return 123;
+        Appointment::create($request->all());
+        return back();
     }
 
     /**
